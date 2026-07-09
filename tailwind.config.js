@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./frontend/src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './frontend/src/**/*.{js,jsx,ts,tsx}', './frontend/src/components/**/*.{js,jsx,ts,tsx}', './frontend/src/pages/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -21,9 +18,9 @@ export default {
           500: '#8b5cf6',
           600: '#7c3aed',
           900: '#4c1d95',
-        }
-      }
+        },
+      },
     },
   },
   plugins: [],
-}
+};

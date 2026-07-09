@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #F9FAFB;
+  color: #1F2937;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #D1D5DB;
+  border-radius: 9999px;
+}
+
+.gradient-purple {
+  background: linear-gradient(90deg, #C4B5FD 0%, #4338CA 100%);
+}
+.gradient-pink {
+  background: linear-gradient(90deg, #C026D3 0%, #F472B6 100%);
+}
