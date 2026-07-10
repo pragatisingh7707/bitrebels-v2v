@@ -141,7 +141,7 @@ export function StudentDashboardContent({ recommendedAlumni = [], sessions = [],
             <div className="flex flex-wrap gap-1.5">
               {profileCompletion?.missing?.map((item) => <Badge key={item} variant="slate">{item}</Badge>)}
             </div>
-            <button className="w-full mt-4 inline-flex items-center justify-center rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700">Complete Profile</button>
+            <Link to="/profile/create" className="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700">Complete Profile</Link>
           </Card>
         </section>
 
