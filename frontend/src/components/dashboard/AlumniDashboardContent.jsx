@@ -182,7 +182,7 @@ export function AlumniDashboardContent({ quickStats = [], requests = [], accepte
           </section>
 
           <section>
-            <Eyebrow action={<Button size="sm" className="rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"><UploadCloud className="h-3.5 w-3.5 mr-1.5" /> Upload new</Button>}>
+            <Eyebrow action={<Link to="/resources" className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"><UploadCloud className="mr-1.5 h-3.5 w-3.5" /> Upload new</Link>}>
               Resources shared
             </Eyebrow>
             <Card className={`divide-y divide-slate-100 ${surface} p-0`}>
