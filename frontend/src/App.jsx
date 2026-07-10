@@ -14,6 +14,7 @@ import ProfileCreate from './pages/ProfileCreate';
 import MentorshipStudent from './pages/MentorshipStudent';
 import MentorshipDashboard from './pages/MentorshipDashboard';
 import MentorDashboard from './pages/MentorDashboard';
+import { AlumniDashboardContent } from './components/dashboard/AlumniDashboardContent';
 
 export default function App() {
   return (
