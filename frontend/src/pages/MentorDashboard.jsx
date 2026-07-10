@@ -1,13 +1,37 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Clock3, Sparkles, Star, Users2 } from 'lucide-react';
 import { Badge } from '../components/Badge';
 import { Card } from '../components/Card';
 import RequestCard from '../components/RequestCard';
-import { initialAlumniRequests } from '../data/mentorshipData';
+import { useAuth } from '../context/AuthContext';
+import { supabase } from '../utils/supabaseclient';
 
 export default function MentorDashboard() {
-  const [requests, setRequests] = useState(initialAlumniRequests);
+  const { user } = useAuth();
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchRequests = async () => {
+      const { data, error } = await supabase
+        .from('mentorship_requests')
+        .select('*')
+        .eq('mentor_id', user.id);
+
+      console.log('MentorDashboard fetched mentorship_requests', { mentorId: user.id, data, error });
+
+      if (error) {
+        console.error('Error fetching mentorship requests:', error);
+        return;
+      }
+
+      setRequests(data || []);
+    };
+
+    fetchRequests();
+  }, [user]);
 
   const stats = useMemo(
     () => [
