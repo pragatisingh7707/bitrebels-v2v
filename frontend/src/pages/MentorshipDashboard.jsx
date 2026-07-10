@@ -10,7 +10,6 @@ import { initialStudentRequests, mentorshipSessions } from '../data/mentorshipDa
 
 export default function MentorshipDashboard() {
   const [requests] = useState(initialStudentRequests);
-
   const stats = useMemo(() => [
     { label: 'Upcoming sessions', value: requests.filter((request) => request.status === 'Accepted').length, icon: CalendarDays },
     { label: 'Pending requests', value: requests.filter((request) => request.status === 'Pending').length, icon: Clock3 },

@@ -28,6 +28,7 @@ export default function MentorshipStudent() {
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [requests, setRequests] = useState(initialStudentRequests);
   const [mentors, setMentors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,60 +97,78 @@ export default function MentorshipStudent() {
     }, {});
   }, [requests]);
 
+  const parseDurationMinutes = (duration) => {
+    const match = duration.match(/\d+/);
+    return match ? Number(match[0]) : 45;
+  };
+
   const handleOpenRequest = (mentor) => {
     setSelectedMentor(mentor);
     setSubmitted(false);
+    setSubmitError('');
     setModalOpen(true);
   };
 
-  const handleSubmit = (values) => {
-    if (!selectedMentor || !user) return;
-    
-    const insertRequest = async () => {
-      try {
-        setSubmitting(true);
-        const { error } = await supabase.from('mentorship_requests').insert({
-          student_id: user.id,
-          mentor_id: selectedMentor.id,
-          message: values.message,
-          status: 'pending',
-        });
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSubmitError('');
+  };
 
-        if (error) {
-          console.error('Error inserting mentorship request:', error);
-          alert('Failed to send request. Please try again.');
-          setSubmitting(false);
-          return;
-        }
+  const handleSubmit = async (values) => {
+    if (!selectedMentor) return;
 
-        // Update local state and show success
-        setRequests((prev) => [
-          {
-            id: `req-${Date.now()}`,
-            mentorId: selectedMentor.id,
-            mentorName: selectedMentor.name,
-            status: 'Pending',
-            createdAt: new Date().toISOString().slice(0, 10),
-            ...values,
-          },
-          ...prev,
-        ]);
-        setSubmitted(true);
-        
-        // Redirect after delay
-        window.setTimeout(() => {
-          setModalOpen(false);
-          setSubmitting(false);
-          navigate('/mentorship-dashboard');
-        }, 1400);
-      } catch (err) {
-        console.error('Exception submitting mentorship request:', err);
-        alert('An error occurred. Please try again.');
+    if (!user?.id) {
+      setSubmitError('Please log in before sending a mentorship request.');
+      return;
+    }
+
+    setSubmitError('');
+    setSubmitting(true);
+
+    try {
+      const { error } = await supabase.from('mentorship_requests').insert({
+        student_id: user.id,
+        mentor_id: selectedMentor.id,
+        purpose: values.purpose,
+        topic: values.topic,
+        message: values.message,
+        preferred_date: values.preferredDate,
+        preferred_time: values.preferredTime,
+        duration: parseDurationMinutes(values.duration),
+        mode: values.mode,
+        status: 'pending',
+      });
+
+      if (error) {
+        console.error('Error inserting mentorship request:', error);
+        setSubmitError(error.message || 'Failed to send request. Please try again.');
         setSubmitting(false);
+        return;
       }
-    };
 
-    insertRequest();
+      setRequests((prev) => [
+        {
+          id: `req-${Date.now()}`,
+          mentorId: selectedMentor.id,
+          mentorName: selectedMentor.name,
+          status: 'Pending',
+          createdAt: new Date().toISOString().slice(0, 10),
+          ...values,
+        },
+        ...prev,
+      ]);
+      setSubmitted(true);
+
+      window.setTimeout(() => {
+        handleCloseModal();
+        setSubmitting(false);
+        navigate('/mentorship-dashboard');
+      }, 1400);
+    } catch (err) {
+      console.error('Exception submitting mentorship request:', err);
+      setSubmitError('An unexpected error occurred. Please try again.');
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -277,7 +296,7 @@ export default function MentorshipStudent() {
         </div>
       </div>
 
-      <RequestModal mentor={selectedMentor} open={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleSubmit} submitted={submitted} submitting={submitting} />
+      <RequestModal mentor={selectedMentor} open={modalOpen} onClose={handleCloseModal} onSubmit={handleSubmit} submitted={submitted} submitting={submitting} submitError={submitError} />
     </div>
   );
 }
