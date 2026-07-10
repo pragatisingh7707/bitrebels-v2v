@@ -31,3 +31,45 @@ html {
 .gradient-pink {
   background: linear-gradient(90deg, #C026D3 0%, #F472B6 100%);
 }
+
+/* --- Dark mode text/bg override patch --- */
+@layer utilities {
+  .dark .text-gray-900,
+  .dark .text-gray-800,
+  .dark .text-black {
+    color: #f5f5f7;
+  }
+
+  .dark .text-gray-700,
+  .dark .text-gray-600 {
+    color: #d4d4d8;
+  }
+
+  .dark .text-gray-500,
+  .dark .text-gray-400 {
+    color: #a1a1aa;
+  }
+
+  .dark .bg-white {
+    background-color: #0f0f1a;
+  }
+
+  .dark .border-gray-100,
+  .dark .border-gray-200 {
+    border-color: #1e1e2e;
+  }
+}
+html.dark p,
+html.dark span,
+html.dark li,
+html.dark td,
+html.dark label {
+  color: #cbd5e1;
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4 {
+  color: #f8fafc;
+}
