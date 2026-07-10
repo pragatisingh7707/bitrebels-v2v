@@ -36,7 +36,6 @@ export default function Dashboard() {
   const { user } = useAuth();
   const role = user?.role || 'student';
   const userName = user?.name || 'User';
-  const userProfile = user?.profile || {};
 
   const recommendedAlumni = useMemo(() => mentors.slice(0, 3), []);
   const trendingCommunities = useMemo(
@@ -59,7 +58,7 @@ export default function Dashboard() {
           name={userName}
           subtitle={
             role === 'alumni'
-              ? `${userProfile.currentRole} at ${userProfile.company} · ${userProfile.graduationYear}`
+              ? `${user?.job_title || '—'} at ${user?.company || '—'} · ${user?.field || 'Professional'}`
               : `You have ${upcomingSessions.length} upcoming sessions and ${notifications.length} new updates waiting for you.`
           }
           ctaLabel={role === 'alumni' ? 'View public profile' : 'Find a mentor'}

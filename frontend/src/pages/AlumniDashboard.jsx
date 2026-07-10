@@ -12,9 +12,10 @@ import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import { Avatar } from '../components/Avatar';
 import { Eyebrow, ViewAll, surface, surfaceHover } from '../components/DashboardUI';
+import { useAuth } from '../context/AuthContext';
 
 import {
-  alumniProfile, pendingMentorshipRequests, studentRequests, acceptedSessions,
+  pendingMentorshipRequests, studentRequests, acceptedSessions,
   upcomingMeetings, communityContributions, uploadedResources, quickStatistics,
   recentMessages, availabilitySlots, calendarHighlights, leaderboard
 } from '../data/dummyData';
@@ -108,6 +109,11 @@ function AvailabilityToggle({ slots }) {
 }
 
 export default function AlumniDashboard() {
+  const { user } = useAuth();
+  const displayName = user?.name || 'Alumni';
+  const displayRole = user?.job_title || 'Professional';
+  const displayCompany = user?.company || 'Not specified';
+  const displayField = user?.field || 'Technology';
   const [requests, setRequests] = useState(pendingMentorshipRequests);
   const rankedLeaderboard = useMemo(() => [...leaderboard].sort((a, b) => a.rank - b.rank), []);
 
@@ -126,18 +132,18 @@ export default function AlumniDashboard() {
           <div className="pointer-events-none absolute -bottom-10 -left-8 h-32 w-32 rounded-full bg-[#F3E8FF]/70 blur-3xl" />
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div className="flex items-center gap-4">
-              <Avatar name={alumniProfile.name} className="h-16 w-16 text-lg ring-4 ring-[#FDF2F8] shadow-lg" />
+              <Avatar name={displayName} className="h-16 w-16 text-lg ring-4 ring-[#FDF2F8] shadow-lg" />
               <div>
                 <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#64748B]">
                   <Sparkles className="h-3.5 w-3.5 text-[#EC4899]" /> Alumni Dashboard
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mt-1">Welcome back, {alumniProfile.name.split(' ')[0]}</h1>
-                <p className="text-slate-600 text-sm mt-2">{alumniProfile.role} at {alumniProfile.company} · {alumniProfile.memberSince}</p>
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mt-1">Welcome back, {displayName.split(' ')[0]}</h1>
+                <p className="text-slate-600 text-sm mt-2">{displayRole} at {displayCompany} · {displayField}</p>
                 <p className="text-sm text-slate-500 mt-3 max-w-2xl">Keep building meaningful connections and help shape the next generation of women in tech.</p>
               </div>
             </div>
-            <Button as={Link} to="/mentors" className="inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(90deg,#EC4899,#8B5CF6)] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition-all hover:translate-y-[-1px] hover:shadow-xl">
-              View Public Profile <ArrowRight className="h-4 w-4" />
+            <Button as={Link} to="/dashboard" className="inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(90deg,#EC4899,#8B5CF6)] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition-all hover:translate-y-[-1px] hover:shadow-xl">
+              View Dashboard <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
         </motion.section>
