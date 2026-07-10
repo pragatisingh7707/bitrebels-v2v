@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 import { WelcomeBanner } from '../components/dashboard/WelcomeBanner';
 import { StatisticsCards } from '../components/dashboard/StatisticsCards';
 import { StudentDashboardContent } from '../components/dashboard/StudentDashboardContent';
@@ -32,7 +33,10 @@ const fadeUp = {
 };
 
 export default function Dashboard() {
-  const [role, setRole] = useState('student');
+  const { user } = useAuth();
+  const role = user?.role || 'student';
+  const userName = user?.name || 'User';
+  const userProfile = user?.profile || {};
 
   const recommendedAlumni = useMemo(() => mentors.slice(0, 3), []);
   const trendingCommunities = useMemo(
@@ -43,22 +47,6 @@ export default function Dashboard() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-      {/* Role toggle */}
-      <div className="inline-flex rounded-full border border-slate-200 bg-white p-1 shadow-sm">
-        {['student', 'alumni'].map((option) => (
-          <button
-            key={option}
-            type="button"
-            onClick={() => setRole(option)}
-            className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${
-              role === option ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            {option === 'student' ? 'Student' : 'Alumni'}
-          </button>
-        ))}
-      </div>
-
       {/* Welcome Banner */}
       <motion.section
         initial="hidden"
@@ -68,10 +56,10 @@ export default function Dashboard() {
       >
         <WelcomeBanner
           role={role}
-          name={role === 'alumni' ? alumniProfile.name : 'Demo User'}
+          name={userName}
           subtitle={
             role === 'alumni'
-              ? `${alumniProfile.role} at ${alumniProfile.company} · ${alumniProfile.memberSince}`
+              ? `${userProfile.currentRole} at ${userProfile.company} · ${userProfile.graduationYear}`
               : `You have ${upcomingSessions.length} upcoming sessions and ${notifications.length} new updates waiting for you.`
           }
           ctaLabel={role === 'alumni' ? 'View public profile' : 'Find a mentor'}

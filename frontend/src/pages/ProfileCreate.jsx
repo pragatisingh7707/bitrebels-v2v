@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Camera, Sparkles } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Input } from '../components/Input';
@@ -20,6 +21,7 @@ const defaultProfile = {
 export default function ProfileCreate() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setUserData } = useAuth();
   const role = location.state?.role || 'student';
   const passedProfile = location.state?.profileData || {};
 
@@ -54,6 +56,21 @@ export default function ProfileCreate() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // Save user data to auth context
+    setUserData({
+      name: profile.name || 'User',
+      role,
+      profile: {
+        bio: profile.bio,
+        currentRole: profile.currentRole,
+        company: profile.company,
+        graduationYear: profile.graduationYear,
+        field: profile.field,
+        linkedInUrl: profile.linkedInUrl,
+        isMentor: profile.isMentor,
+        photoPreview: profile.photoPreview
+      }
+    });
     navigate('/dashboard');
   };
 
