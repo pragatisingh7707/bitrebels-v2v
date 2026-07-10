@@ -4,6 +4,7 @@ import { ArrowRight, FileText, Link2, Sparkles } from 'lucide-react';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Input } from '../components/Input';
+import { useAuth } from '../context/AuthContext';
 
 const initialManualData = {
   currentRole: '',
@@ -14,18 +15,34 @@ const initialManualData = {
 
 export default function SignupChoice() {
   const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [role, setRole] = useState('student');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [linkedInUrl, setLinkedInUrl] = useState('');
   const [manualData, setManualData] = useState(initialManualData);
   const [isParsing, setIsParsing] = useState(false);
+  const [error, setError] = useState('');
 
   const handleManualChange = (event) => {
     const { name, value } = event.target;
     setManualData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleManualContinue = (event) => {
+  const handleManualContinue = async (event) => {
     event.preventDefault();
+    setError('');
+
+    if (!email || !password) {
+      setError('Please enter an email and password to create your account.');
+      return;
+    }
+
+    const { error: signUpError } = await signUp(email, password, '', role);
+    if (signUpError) {
+      setError(signUpError.message);
+      return;
+    }
 
     navigate('/profile/create', {
       state: {
@@ -48,9 +65,22 @@ export default function SignupChoice() {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    if (!email || !password) {
+      setError('Please enter an email and password before uploading.');
+      return;
+    }
+
+    setError('');
     setIsParsing(true);
 
-    window.setTimeout(() => {
+    window.setTimeout(async () => {
+      const { error: signUpError } = await signUp(email, password, '', role);
+      if (signUpError) {
+        setError(signUpError.message);
+        setIsParsing(false);
+        return;
+      }
+
       const prefilledProfile = role === 'alumni'
         ? {
             name: 'Riya Kapoor',
@@ -92,33 +122,38 @@ export default function SignupChoice() {
           <div className="space-y-2">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary-600">Create your account</p>
             <h1 className="text-3xl font-bold tracking-tight text-slate-900">Join HerConnect as a student or alum</h1>
-            <p className="text-base text-slate-600">Choose the path that fits you best and we’ll help you build your profile.</p>
+            <p className="text-base text-slate-600">Choose the path that fits you best and we'll help you build your profile.</p>
           </div>
 
           <div className="mx-auto flex flex-wrap justify-center gap-3">
-            <button
-              type="button"
-              onClick={() => setRole('student')}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${role === 'student' ? 'bg-primary-600 text-white shadow-md' : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}`}
-            >
+            <button type="button" onClick={() => setRole('student')} className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${role === 'student' ? 'bg-primary-600 text-white shadow-md' : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}`}>
               I am a Student
             </button>
-            <button
-              type="button"
-              onClick={() => setRole('alumni')}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${role === 'alumni' ? 'bg-secondary-600 text-white shadow-md' : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}`}
-            >
+            <button type="button" onClick={() => setRole('alumni')} className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${role === 'alumni' ? 'bg-secondary-600 text-white shadow-md' : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}`}>
               I am an Alumni
             </button>
           </div>
         </div>
 
+        <Card className="mx-auto w-full max-w-md p-6 sm:p-8">
+          <h2 className="mb-4 text-lg font-semibold text-slate-900">Account details</h2>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+            </div>
+            <div>
+              <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters" />
+            </div>
+          </div>
+          {error ? <p className="mt-3 text-sm font-medium text-red-600">{error}</p> : null}
+        </Card>
+
         <div className="grid gap-6 lg:grid-cols-2">
           <Card className="p-6 sm:p-8">
             <div className="mb-6 flex items-start gap-3">
-              <div className="rounded-xl bg-primary-50 p-2 text-primary-600">
-                <Link2 className="h-5 w-5" />
-              </div>
+              <div className="rounded-xl bg-primary-50 p-2 text-primary-600"><Link2 className="h-5 w-5" /></div>
               <div>
                 <h2 className="text-xl font-semibold text-slate-900">Paste LinkedIn URL</h2>
                 <p className="text-sm text-slate-600">Fill in a few details manually and continue to your profile.</p>
@@ -128,12 +163,7 @@ export default function SignupChoice() {
             <form onSubmit={handleManualContinue} className="space-y-4">
               <div>
                 <label htmlFor="linkedin-url" className="mb-1.5 block text-sm font-medium text-slate-700">LinkedIn URL</label>
-                <Input
-                  id="linkedin-url"
-                  value={linkedInUrl}
-                  onChange={(event) => setLinkedInUrl(event.target.value)}
-                  placeholder="https://linkedin.com/in/yourname"
-                />
+                <Input id="linkedin-url" value={linkedInUrl} onChange={(event) => setLinkedInUrl(event.target.value)} placeholder="https://linkedin.com/in/yourname" />
               </div>
               <div>
                 <label htmlFor="current-role" className="mb-1.5 block text-sm font-medium text-slate-700">Current role</label>
@@ -162,9 +192,7 @@ export default function SignupChoice() {
 
           <Card className="p-6 sm:p-8">
             <div className="mb-6 flex items-start gap-3">
-              <div className="rounded-xl bg-secondary-50 p-2 text-secondary-600">
-                <FileText className="h-5 w-5" />
-              </div>
+              <div className="rounded-xl bg-secondary-50 p-2 text-secondary-600"><FileText className="h-5 w-5" /></div>
               <div>
                 <h2 className="text-xl font-semibold text-slate-900">Upload LinkedIn PDF</h2>
                 <p className="text-sm text-slate-600">Import your details quickly and move to the editable profile screen.</p>
@@ -173,11 +201,9 @@ export default function SignupChoice() {
 
             <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center transition hover:border-primary-400 hover:bg-primary-50">
               <input type="file" accept=".pdf" className="hidden" onChange={handlePdfUpload} />
-              <div className="rounded-full bg-white p-3 shadow-sm">
-                <FileText className="h-6 w-6 text-primary-600" />
-              </div>
+              <div className="rounded-full bg-white p-3 shadow-sm"><FileText className="h-6 w-6 text-primary-600" /></div>
               <p className="mt-4 text-sm font-semibold text-slate-800">Choose a LinkedIn PDF</p>
-              <p className="mt-1 text-sm text-slate-500">We’ll parse it and prefill your profile.</p>
+              <p className="mt-1 text-sm text-slate-500">We'll parse it and prefill your profile.</p>
             </label>
 
             {isParsing ? (

@@ -1,17 +1,24 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Sparkles, Users, MessageSquare, LayoutDashboard, GraduationCap } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Avatar } from './Avatar';
 import NotificationBell from './NotificationBell';
 
 export default function Navbar() {
-  const { user } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
   const displayName = user?.name || 'User';
-  const navLinkClass = ({ isActive }) => 
+
+  const navLinkClass = ({ isActive }) =>
     `flex items-center gap-1.5 text-sm font-medium transition-colors py-1 border-b-2 ${
       isActive ? 'border-primary-600 text-primary-600' : 'border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-200'
     }`;
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/80 backdrop-blur">
@@ -27,14 +34,31 @@ export default function Navbar() {
         </nav>
         <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
           <NotificationBell />
-          <Link to="/signup" className="inline-flex rounded-full bg-gradient-to-r from-primary-600 to-secondary-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
-            Sign Up
-          </Link>
-          <div className="hidden sm:block text-right">
-            <div className="text-xs font-semibold text-slate-900">{displayName}</div>
-            <div className="text-[10px] text-slate-400 font-medium uppercase">{user?.role === 'alumni' ? 'Alumni Profile' : 'Student Profile'}</div>
-          </div>
-          <Avatar name={displayName} className="h-8 w-8 text-xs" />
+
+          {isAuthenticated ? (
+            <>
+              <div className="hidden sm:block text-right">
+                <div className="text-xs font-semibold text-slate-900">{displayName}</div>
+                <div className="text-[10px] text-slate-400 font-medium uppercase">{user?.role === 'alumni' ? 'Alumni Profile' : 'Student Profile'}</div>
+              </div>
+              <Avatar name={displayName} className="h-8 w-8 text-xs" />
+              <button
+                onClick={handleLogout}
+                className="text-sm font-semibold text-slate-600 hover:text-primary-600"
+              >
+                Log Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-sm font-semibold text-slate-700 hover:text-primary-600">
+                Log In
+              </Link>
+              <Link to="/signup" className="inline-flex rounded-full bg-gradient-to-r from-primary-600 to-secondary-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

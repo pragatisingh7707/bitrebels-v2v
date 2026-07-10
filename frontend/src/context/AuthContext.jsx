@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../utils/supabaseClient';
 
 const AuthContext = createContext();
 
@@ -6,34 +7,87 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load user data from localStorage on mount
   useEffect(() => {
-    const savedUser = localStorage.getItem('herconnect_user');
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (error) {
-        console.error('Failed to parse saved user data:', error);
+    // Check for existing session on load
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        loadProfile(session.user.id, session.user.email);
+      } else {
+        setIsLoading(false);
       }
-    }
-    setIsLoading(false);
+    });
+
+    // Listen for login/logout changes
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        loadProfile(session.user.id, session.user.email);
+      } else {
+        setUser(null);
+        setIsLoading(false);
+      }
+    });
+
+    return () => listener.subscription.unsubscribe();
   }, []);
 
-  const setUserData = (userData) => {
-    setUser(userData);
-    localStorage.setItem('herconnect_user', JSON.stringify(userData));
+  // Fetch the full profile row and merge with basic auth info
+  async function loadProfile(userId, email) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+
+    if (!error && data) {
+      setUser({ id: userId, email, ...data });
+    } else {
+      // Profile row might not exist yet (e.g. right after signup, trigger delay)
+      setUser({ id: userId, email });
+    }
+    setIsLoading(false);
+  }
+
+  const signUp = async (email, password, name, role) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { name, role } },
+    });
+    return { data, error };
   };
 
-  const logout = () => {
+  const signIn = async (email, password) => {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    return { data, error };
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    localStorage.removeItem('herconnect_user');
+  };
+
+  const updateProfile = async (updates) => {
+    if (!user) return { error: 'No user logged in' };
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(updates)
+      .eq('id', user.id)
+      .select()
+      .single();
+
+    if (!error && data) {
+      setUser((prev) => ({ ...prev, ...data }));
+    }
+    return { data, error };
   };
 
   const value = {
     user,
     isLoading,
-    setUserData,
+    signUp,
+    signIn,
     logout,
+    updateProfile,
     isAuthenticated: !!user
   };
 

@@ -21,7 +21,7 @@ const defaultProfile = {
 export default function ProfileCreate() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setUserData } = useAuth();
+  const { updateProfile } = useAuth();
   const role = location.state?.role || 'student';
   const passedProfile = location.state?.profileData || {};
 
@@ -54,25 +54,26 @@ export default function ProfileCreate() {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Save user data to auth context
-    setUserData({
-      name: profile.name || 'User',
-      role,
-      profile: {
-        bio: profile.bio,
-        currentRole: profile.currentRole,
-        company: profile.company,
-        graduationYear: profile.graduationYear,
-        field: profile.field,
-        linkedInUrl: profile.linkedInUrl,
-        isMentor: profile.isMentor,
-        photoPreview: profile.photoPreview
-      }
-    });
-    navigate('/dashboard');
-  };
+  const handleSubmit = async (event) => {
+  event.preventDefault();
+  const { error } = await updateProfile({
+    name: profile.name || 'User',
+    bio: profile.bio,
+    job_title: profile.currentRole,
+    company: profile.company,
+    graduation_year: profile.graduationYear,
+    field: profile.field,
+    linkedin_url: profile.linkedInUrl,
+    is_mentor: profile.isMentor
+  });
+
+  if (error) {
+    console.error('Failed to save profile:', error);
+    return;
+  }
+
+  navigate('/dashboard');
+};
 
   return (
     <div className="min-h-[80vh] bg-[radial-gradient(circle_at_top,_rgba(139,92,246,0.08),_transparent_45%)] px-4 py-10 sm:px-6 lg:px-8">

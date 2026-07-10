@@ -11,6 +11,7 @@ import Resources from './pages/Resources';
 import NotificationCenter from './pages/NotificationCenter';
 import SignupChoice from './pages/SignupChoice';
 import ProfileCreate from './pages/ProfileCreate';
+import Login from './pages/Login';
 import MentorshipStudent from './pages/MentorshipStudent';
 import MentorshipDashboard from './pages/MentorshipDashboard';
 import MentorDashboard from './pages/MentorDashboard';
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/notifications" element={<NotificationCenter />} />
           <Route path="/signup" element={<SignupChoice />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/profile/create" element={<ProfileCreate />} />
           <Route path="/find-mentors" element={<MentorshipStudent />} />
           <Route path="/mentorship-dashboard" element={<MentorshipDashboard />} />
