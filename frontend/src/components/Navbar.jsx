@@ -22,6 +22,9 @@ export default function Navbar() {
           <NavLink to="/communities" className={navLinkClass}><MessageSquare className="h-4 w-4" /> Communities</NavLink>
         </nav>
         <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
+          <Link to="/signup" className="inline-flex rounded-full bg-gradient-to-r from-primary-600 to-secondary-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
+            Sign Up
+          </Link>
           <div className="hidden sm:block text-right">
             <div className="text-xs font-semibold text-slate-900">Demo User</div>
             <div className="text-[10px] text-slate-400 font-medium uppercase">Student Profile</div>
