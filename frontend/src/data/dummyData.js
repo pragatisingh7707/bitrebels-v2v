@@ -100,10 +100,22 @@ export const upcomingEvents = [
 ];
 
 export const notifications = [
-  { id: "n1", message: "Ananya Sharma accepted your mentorship request.", time: "10 min ago", type: "success" },
-  { id: "n2", message: "New reply in Women in AI & Analytics community.", time: "1 hour ago", type: "info" },
-  { id: "n3", message: "Your session with Riya Kapoor starts in 2 days.", time: "3 hours ago", type: "reminder" },
-  { id: "n4", message: "Profile completion reminder: add your resume.", time: "Yesterday", type: "warning" }
+  { id: "n1", category: "mentorship", message: "Ananya Sharma accepted your mentorship request.", actorName: "Ananya Sharma", timestamp: "10 min ago", read: false },
+  { id: "n2", category: "community", message: "Mira replied to your question in Women in AI & Analytics.", actorName: "Mira Singh", timestamp: "25 min ago", read: false },
+  { id: "n3", category: "accepted", message: "Riya Kapoor approved your mentor intro request.", actorName: "Riya Kapoor", timestamp: "1 hour ago", read: true },
+  { id: "n4", category: "rejected", message: "Your internship request for a product role was not shortlisted.", actorName: "Alumni Team", timestamp: "2 hours ago", read: false },
+  { id: "n5", category: "resources", message: "A new research reading guide was uploaded by the alumni team.", actorName: "Alumni Team", timestamp: "3 hours ago", read: true },
+  { id: "n6", category: "internships", message: "A new AI internship opportunity is now live.", actorName: "Career Office", timestamp: "4 hours ago", read: false },
+  { id: "n7", category: "mentorship", message: "Your session with Sneha Iyer is scheduled for tomorrow.", actorName: "Sneha Iyer", timestamp: "5 hours ago", read: false },
+  { id: "n8", category: "community", message: "A new discussion thread was started in Design & UX Circle.", actorName: "Lina Bose", timestamp: "6 hours ago", read: true },
+  { id: "n9", category: "accepted", message: "Kriti Verma confirmed your resume review slot.", actorName: "Kriti Verma", timestamp: "7 hours ago", read: false },
+  { id: "n10", category: "rejected", message: "Your scholarship application is still under review.", actorName: "Scholarship Desk", timestamp: "8 hours ago", read: true },
+  { id: "n11", category: "resources", message: "A polished interview prep pack was shared in Resources.", actorName: "Alumni Team", timestamp: "9 hours ago", read: false },
+  { id: "n12", category: "internships", message: "New consulting internships were added for this month.", actorName: "Career Office", timestamp: "12 hours ago", read: true },
+  { id: "n13", category: "mentorship", message: "You received a new mentor recommendation based on your profile.", actorName: "HerConnect", timestamp: "Yesterday", read: false },
+  { id: "n14", category: "community", message: "Priya left a helpful note on your startup founders post.", actorName: "Priya Menon", timestamp: "Yesterday", read: true },
+  { id: "n15", category: "accepted", message: "Your request to join Product Management Circle was approved.", actorName: "Community Admin", timestamp: "Yesterday", read: false },
+  { id: "n16", category: "resources", message: "A new entrepreneurship guide is now available for bookmarking.", actorName: "Alumni Team", timestamp: "2 days ago", read: true }
 ];
 
 export const recentActivity = [
