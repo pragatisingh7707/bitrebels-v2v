@@ -1,13 +1,15 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Sparkles, GraduationCap, MessageCircleMore, CalendarDays, Clock3, Link2, SlidersHorizontal, CheckCircle2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import FilterSidebar from '../components/FilterSidebar';
 import RequestModal from '../components/RequestModal';
-import { mentorshipMentors, initialStudentRequests } from '../data/mentorshipData';
+import { supabase } from '../utils/supabaseclient';
+import { initialStudentRequests } from '../data/mentorshipData';
 
 const studentSections = [
   { key: 'upcoming', title: 'Upcoming Sessions', status: 'Accepted' },
@@ -19,15 +21,63 @@ const studentSections = [
 
 export default function MentorshipStudent() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState({});
   const [selectedMentor, setSelectedMentor] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [requests, setRequests] = useState(initialStudentRequests);
+  const [mentors, setMentors] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch mentors from Supabase on component mount
+  useEffect(() => {
+    const fetchMentors = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('is_mentor', true);
+
+        if (error) {
+          console.error('Error fetching mentors:', error);
+          setMentors([]);
+        } else {
+          // Map Supabase fields to expected mentor object structure
+          const mappedMentors = (data || []).map((profile) => ({
+            id: profile.id,
+            name: profile.name || 'Unknown',
+            role: profile.job_title || 'Professional',
+            company: profile.company || 'N/A',
+            domain: profile.field || 'General',
+            skills: (profile.skills || []).filter(Boolean),
+            profilePhoto: profile.photoPreview || `https://ui-avatars.com/api/?name=${encodeURIComponent(profile.name || 'User')}`,
+            verified: profile.verified || false,
+            experience: profile.years_of_experience || 0,
+            graduationYear: profile.graduation_year || new Date().getFullYear(),
+            bio: profile.bio || '',
+            availability: profile.availability || 'Flexible',
+            location: profile.location || 'Remote',
+            industry: profile.industry || 'Technology',
+          }));
+          setMentors(mappedMentors);
+        }
+      } catch (err) {
+        console.error('Exception fetching mentors:', err);
+        setMentors([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMentors();
+  }, []);
 
   const filteredMentors = useMemo(() => {
-    return mentorshipMentors.filter((mentor) => {
+    return mentors.filter((mentor) => {
       const matchesQuery = `${mentor.name} ${mentor.role} ${mentor.company} ${mentor.domain} ${mentor.skills.join(' ')}`.toLowerCase().includes(search.toLowerCase());
       const matchesIndustry = !filters.industry || mentor.industry === filters.industry;
       const matchesCompany = !filters.company || mentor.company === filters.company;
@@ -37,7 +87,7 @@ export default function MentorshipStudent() {
       const matchesAvailability = !filters.availability || mentor.availability === filters.availability;
       return matchesQuery && matchesIndustry && matchesCompany && matchesDomain && matchesExperience && matchesGraduationYear && matchesAvailability;
     });
-  }, [filters, search]);
+  }, [filters, search, mentors]);
 
   const groupedRequests = useMemo(() => {
     return studentSections.reduce((acc, section) => {
@@ -53,25 +103,53 @@ export default function MentorshipStudent() {
   };
 
   const handleSubmit = (values) => {
-    if (!selectedMentor) return;
-    window.setTimeout(() => {
-      setRequests((prev) => [
-        {
-          id: `req-${Date.now()}`,
-          mentorId: selectedMentor.id,
-          mentorName: selectedMentor.name,
-          status: 'Pending',
-          createdAt: new Date().toISOString().slice(0, 10),
-          ...values,
-        },
-        ...prev,
-      ]);
-      setSubmitted(true);
-      window.setTimeout(() => {
-        setModalOpen(false);
-        navigate('/mentorship-dashboard');
-      }, 1400);
-    }, 800);
+    if (!selectedMentor || !user) return;
+    
+    const insertRequest = async () => {
+      try {
+        setSubmitting(true);
+        const { error } = await supabase.from('mentorship_requests').insert({
+          student_id: user.id,
+          mentor_id: selectedMentor.id,
+          message: values.message,
+          status: 'pending',
+        });
+
+        if (error) {
+          console.error('Error inserting mentorship request:', error);
+          alert('Failed to send request. Please try again.');
+          setSubmitting(false);
+          return;
+        }
+
+        // Update local state and show success
+        setRequests((prev) => [
+          {
+            id: `req-${Date.now()}`,
+            mentorId: selectedMentor.id,
+            mentorName: selectedMentor.name,
+            status: 'Pending',
+            createdAt: new Date().toISOString().slice(0, 10),
+            ...values,
+          },
+          ...prev,
+        ]);
+        setSubmitted(true);
+        
+        // Redirect after delay
+        window.setTimeout(() => {
+          setModalOpen(false);
+          setSubmitting(false);
+          navigate('/mentorship-dashboard');
+        }, 1400);
+      } catch (err) {
+        console.error('Exception submitting mentorship request:', err);
+        alert('An error occurred. Please try again.');
+        setSubmitting(false);
+      }
+    };
+
+    insertRequest();
   };
 
   return (
@@ -103,8 +181,16 @@ export default function MentorshipStudent() {
             </div>
           </Card>
 
-          <div className="grid gap-5 lg:grid-cols-2">
-            {filteredMentors.map((mentor) => (
+          {loading ? (
+            <Card className="p-12 text-center">
+              <div className="flex flex-col items-center gap-4">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary-600" />
+                <p className="text-slate-600">Loading mentors...</p>
+              </div>
+            </Card>
+          ) : (
+            <div className="grid gap-5 lg:grid-cols-2">
+              {filteredMentors.map((mentor) => (
               <motion.article key={mentor.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="overflow-hidden rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:shadow-xl">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
@@ -142,7 +228,8 @@ export default function MentorshipStudent() {
                 </div>
               </motion.article>
             ))}
-          </div>
+            </div>
+          )}
 
           <Card className="p-6">
             <div className="mb-4 flex items-center justify-between gap-2">
@@ -190,7 +277,7 @@ export default function MentorshipStudent() {
         </div>
       </div>
 
-      <RequestModal mentor={selectedMentor} open={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleSubmit} submitted={submitted} />
+      <RequestModal mentor={selectedMentor} open={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleSubmit} submitted={submitted} submitting={submitting} />
     </div>
   );
 }

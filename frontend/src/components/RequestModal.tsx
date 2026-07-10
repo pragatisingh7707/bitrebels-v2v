@@ -9,6 +9,7 @@ interface RequestModalProps {
   readonly onClose: () => void;
   readonly onSubmit: (values: RequestFormValues) => void;
   readonly submitted: boolean;
+  readonly submitting?: boolean;
 }
 
 const initialValues: RequestFormValues = {
@@ -21,7 +22,7 @@ const initialValues: RequestFormValues = {
   mode: 'Google Meet',
 };
 
-export default function RequestModal({ mentor, open, onClose, onSubmit, submitted }: RequestModalProps) {
+export default function RequestModal({ mentor, open, onClose, onSubmit, submitted, submitting = false }: RequestModalProps) {
   const [values, setValues] = useState(initialValues);
 
   useEffect(() => {
@@ -100,8 +101,17 @@ export default function RequestModal({ mentor, open, onClose, onSubmit, submitte
                 </div>
 
                 <div className="flex justify-end gap-2 pt-2">
-                  <button type="button" onClick={onClose} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">Cancel</button>
-                  <button type="submit" className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-700">Submit request</button>
+                  <button type="button" onClick={onClose} disabled={submitting} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">Cancel</button>
+                  <button type="submit" disabled={submitting} className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                    {submitting ? (
+                      <>
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        Sending...
+                      </>
+                    ) : (
+                      'Submit request'
+                    )}
+                  </button>
                 </div>
               </form>
             )}
