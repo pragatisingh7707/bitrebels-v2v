@@ -10,6 +10,7 @@ interface RequestModalProps {
   readonly onSubmit: (values: RequestFormValues) => void;
   readonly submitted: boolean;
   readonly submitting?: boolean;
+  readonly submitError?: string;
 }
 
 const initialValues: RequestFormValues = {
@@ -22,7 +23,7 @@ const initialValues: RequestFormValues = {
   mode: 'Google Meet',
 };
 
-export default function RequestModal({ mentor, open, onClose, onSubmit, submitted, submitting = false }: RequestModalProps) {
+export default function RequestModal({ mentor, open, onClose, onSubmit, submitted, submitting = false, submitError = '' }: RequestModalProps) {
   const [values, setValues] = useState(initialValues);
 
   useEffect(() => {
@@ -99,6 +100,10 @@ export default function RequestModal({ mentor, open, onClose, onSubmit, submitte
                     <option>Phone</option>
                   </select>
                 </div>
+
+                {submitError ? (
+                  <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{submitError}</p>
+                ) : null}
 
                 <div className="flex justify-end gap-2 pt-2">
                   <button type="button" onClick={onClose} disabled={submitting} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">Cancel</button>
