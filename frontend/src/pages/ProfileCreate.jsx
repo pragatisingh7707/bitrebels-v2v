@@ -57,32 +57,32 @@ export default function ProfileCreate() {
   };
 
   return (
-    <div className="min-h-[80vh] px-4 py-10 sm:px-6 lg:px-8">
+    <div className="min-h-[80vh] px-4 py-10 sm:px-6 lg:px-8 text-slate-900 dark:text-slate-100">
       <div className="mx-auto max-w-xl">
-        <h1 className="mb-6 text-2xl font-bold text-slate-900">Complete your profile</h1>
+        <h1 className="mb-6 text-2xl font-bold text-slate-900 dark:text-slate-100">Complete your profile</h1>
 
         <Card className="p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700">Full name</label>
+              <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-200">Full name</label>
               <Input id="name" name="name" value={form.name} onChange={handleChange} placeholder="Kritika Sharma" />
             </div>
 
             <div>
-              <label htmlFor="bio" className="mb-1.5 block text-sm font-medium text-slate-700">Bio</label>
+              <label htmlFor="bio" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-200">Bio</label>
               <textarea
                 id="bio"
                 name="bio"
                 value={form.bio}
                 onChange={handleChange}
                 rows={3}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
+                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
                 placeholder="A little about you..."
               />
             </div>
 
             <div>
-              <label htmlFor="currentRole" className="mb-1.5 block text-sm font-medium text-slate-700">Current role</label>
+              <label htmlFor="currentRole" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-200">Current role</label>
               <Input id="currentRole" name="currentRole" value={form.currentRole} onChange={handleChange} placeholder="Software Engineer" />
             </div>
 
@@ -98,12 +98,12 @@ export default function ProfileCreate() {
             </div>
 
             <div>
-              <label htmlFor="field" className="mb-1.5 block text-sm font-medium text-slate-700">Field of study</label>
+              <label htmlFor="field" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-200">Field of study</label>
               <Input id="field" name="field" value={form.field} onChange={handleChange} placeholder="Computer Science" />
             </div>
 
             <div>
-              <label htmlFor="linkedInUrl" className="mb-1.5 block text-sm font-medium text-slate-700">LinkedIn URL</label>
+              <label htmlFor="linkedInUrl" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-200">LinkedIn URL</label>
               <Input id="linkedInUrl" name="linkedInUrl" value={form.linkedInUrl} onChange={handleChange} placeholder="https://linkedin.com/in/yourname" />
             </div>
 

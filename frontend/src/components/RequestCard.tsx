@@ -19,7 +19,7 @@ export default function RequestCard({ request, mode, onAccept, onReject, onSugge
   const alumniRequest = request as AlumniRequest;
 
   return (
-    <Card className="p-5 bg-white/80 backdrop-blur">
+    <Card className="p-5 bg-white/80 dark:bg-slate-900/80 backdrop-blur">
       <div className="flex flex-col gap-4">
         <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
@@ -31,10 +31,10 @@ export default function RequestCard({ request, mode, onAccept, onReject, onSugge
               )}
 
               <div>
-                <h3 className="font-semibold text-slate-900">
+                <h3 className="font-semibold text-slate-900 dark:text-slate-100">
                   {isAlumni ? alumniRequest.studentName : studentRequest.mentorName}
                 </h3>
-                <p className="text-sm text-slate-500 mt-1">
+                <p className="text-sm text-slate-500 mt-1 dark:text-slate-400">
                   {isAlumni ? `${alumniRequest.college} · ${alumniRequest.branch}` : studentRequest.topic}
                 </p>
               </div>
@@ -42,7 +42,7 @@ export default function RequestCard({ request, mode, onAccept, onReject, onSugge
           <StatusBadge status={request.status} />
         </div>
 
-        <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-2">
+        <div className="grid gap-3 text-sm text-slate-600 dark:text-slate-400 sm:grid-cols-2">
           {isAlumni ? (
             <>
               <div className="flex items-center gap-2"><GraduationCap className="h-4 w-4 text-primary-500" /> <span>Batch {alumniRequest.graduationYear}</span></div>
@@ -60,7 +60,7 @@ export default function RequestCard({ request, mode, onAccept, onReject, onSugge
           )}
         </div>
 
-        <p className="text-sm text-slate-600 leading-6">
+        <p className="text-sm text-slate-600 leading-6 dark:text-slate-400">
           {isAlumni ? alumniRequest.message : studentRequest.message}
         </p>
 

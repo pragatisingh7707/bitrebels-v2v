@@ -4,7 +4,7 @@ import { ChevronRight } from 'lucide-react';
 
 /* Shared visual language for dashboard pages. Keep this in one place so every dashboard stays visually consistent. */
 
-export const surface = 'bg-white border border-slate-100 shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)] rounded-2xl';
+export const surface = 'bg-white border border-slate-100 shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)] rounded-2xl dark:bg-slate-900 dark:border-slate-700';
 export const surfaceHover = 'hover:-translate-y-1 hover:shadow-[0_16px_45px_-18px_rgba(236,72,153,0.28)] transition-all duration-300';
 
 export function Eyebrow({ children, action }) {

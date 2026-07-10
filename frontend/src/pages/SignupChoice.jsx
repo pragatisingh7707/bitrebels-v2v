@@ -113,7 +113,7 @@ export default function SignupChoice() {
   };
 
   return (
-    <div className="min-h-[80vh] bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.08),_transparent_45%)] px-4 py-10 sm:px-6 lg:px-8">
+    <div className="min-h-[80vh] bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.08),_transparent_45%)] px-4 py-10 sm:px-6 lg:px-8 dark:bg-slate-950">
       <div className="mx-auto flex max-w-6xl flex-col gap-8">
         <div className="space-y-4 text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-lg">
@@ -121,29 +121,29 @@ export default function SignupChoice() {
           </div>
           <div className="space-y-2">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary-600">Create your account</p>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Join HerConnect as a student or alum</h1>
-            <p className="text-base text-slate-600">Choose the path that fits you best and we'll help you build your profile.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Join HerConnect as a student or alum</h1>
+            <p className="text-base text-slate-600 dark:text-slate-300">Choose the path that fits you best and we'll help you build your profile.</p>
           </div>
 
           <div className="mx-auto flex flex-wrap justify-center gap-3">
-            <button type="button" onClick={() => setRole('student')} className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${role === 'student' ? 'bg-primary-600 text-white shadow-md' : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}`}>
+            <button type="button" onClick={() => setRole('student')} className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${role === 'student' ? 'bg-primary-600 text-white shadow-md' : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-100 dark:ring-slate-700 dark:hover:bg-slate-700'}`}>
               I am a Student
             </button>
-            <button type="button" onClick={() => setRole('alumni')} className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${role === 'alumni' ? 'bg-secondary-600 text-white shadow-md' : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}`}>
+            <button type="button" onClick={() => setRole('alumni')} className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${role === 'alumni' ? 'bg-secondary-600 text-white shadow-md' : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-100 dark:ring-slate-700 dark:hover:bg-slate-700'}`}>
               I am an Alumni
             </button>
           </div>
         </div>
 
-        <Card className="mx-auto w-full max-w-md p-6 sm:p-8">
-          <h2 className="mb-4 text-lg font-semibold text-slate-900">Account details</h2>
+        <Card className="mx-auto w-full max-w-md p-6 sm:p-8 dark:bg-slate-900 dark:border-slate-700">
+          <h2 className="mb-4 text-lg font-semibold text-slate-900 dark:text-slate-100">Account details</h2>
           <div className="space-y-4">
             <div>
-              <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
+              <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-200">Email</label>
               <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
             </div>
             <div>
-              <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
+              <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-200">Password</label>
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters" />
             </div>
           </div>
@@ -199,11 +199,11 @@ export default function SignupChoice() {
               </div>
             </div>
 
-            <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center transition hover:border-primary-400 hover:bg-primary-50">
+            <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center transition hover:border-primary-400 hover:bg-primary-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-400">
               <input type="file" accept=".pdf" className="hidden" onChange={handlePdfUpload} />
               <div className="rounded-full bg-white p-3 shadow-sm"><FileText className="h-6 w-6 text-primary-600" /></div>
-              <p className="mt-4 text-sm font-semibold text-slate-800">Choose a LinkedIn PDF</p>
-              <p className="mt-1 text-sm text-slate-500">We'll parse it and prefill your profile.</p>
+              <p className="mt-4 text-sm font-semibold text-slate-800 dark:text-slate-100">Choose a LinkedIn PDF</p>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">We'll parse it and prefill your profile.</p>
             </label>
 
             {isParsing ? (

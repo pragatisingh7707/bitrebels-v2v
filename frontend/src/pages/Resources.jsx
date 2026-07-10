@@ -48,7 +48,7 @@ export default function Resources() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 text-slate-900 dark:text-slate-100">
       <section className="overflow-hidden rounded-[28px] bg-gradient-to-r from-primary-600 via-fuchsia-600 to-secondary-600 p-8 text-white shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -83,7 +83,7 @@ export default function Resources() {
               key={category}
               type="button"
               onClick={() => setActiveCategory(category)}
-              className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${activeCategory === category ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+              className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${activeCategory === category ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700'}`}
             >
               {category}
             </button>
@@ -109,8 +109,8 @@ export default function Resources() {
                 </button>
               </div>
 
-              <h2 className="mt-4 text-lg font-semibold text-slate-900">{resource.title}</h2>
-              <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">{resource.description}</p>
+              <h2 className="mt-4 text-lg font-semibold text-slate-900 dark:text-slate-100">{resource.title}</h2>
+              <p className="mt-2 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{resource.description}</p>
 
               <div className="mt-5 flex items-center justify-between gap-3">
                 <Badge variant="secondary">{resource.type}</Badge>
@@ -124,9 +124,9 @@ export default function Resources() {
       </div>
 
       {visibleResources.length === 0 && (
-        <Card className="mt-8 p-8 text-center">
-          <p className="text-lg font-semibold text-slate-800">No resources match this search yet.</p>
-          <p className="mt-2 text-sm text-slate-500">Try another keyword or switch to a different category.</p>
+        <Card className="mt-8 p-8 text-center dark:bg-slate-900 dark:border-slate-700">
+          <p className="text-lg font-semibold text-slate-800 dark:text-slate-100">No resources match this search yet.</p>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Try another keyword or switch to a different category.</p>
         </Card>
       )}
     </div>

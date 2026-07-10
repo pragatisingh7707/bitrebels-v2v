@@ -70,8 +70,8 @@ export default function CommunityDetail() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <Button variant="ghost" as={Link} to="/communities" className="mb-4 px-0 text-sm text-slate-500 hover:text-slate-700">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 text-slate-900 dark:text-slate-100">
+      <Button variant="ghost" as={Link} to="/communities" className="mb-4 px-0 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-300 dark:hover:text-white">
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to communities
       </Button>
 
@@ -115,7 +115,7 @@ export default function CommunityDetail() {
                 />
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 text-sm text-slate-500">
+                <span className="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400">
                   <SlidersHorizontal className="h-4 w-4" /> Filter
                 </span>
                 {allTags.map((tag) => (
@@ -136,7 +136,7 @@ export default function CommunityDetail() {
             <Card className="p-8 text-center">
               <MessageSquareText className="mx-auto h-8 w-8 text-slate-400" />
               <h2 className="mt-3 text-lg font-semibold text-slate-800">No posts yet for this search</h2>
-              <p className="mt-2 text-sm text-slate-500">Try another keyword or start the conversation yourself.</p>
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Try another keyword or start the conversation yourself.</p>
             </Card>
           ) : (
             <div className="space-y-4">
@@ -151,14 +151,14 @@ export default function CommunityDetail() {
           <Card className="p-4 sm:p-5">
             <div className="flex items-center gap-2">
               <BookMarked className="h-4 w-4 text-primary-600" />
-              <h2 className="text-sm font-semibold text-slate-900">Pinned resources</h2>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Pinned resources</h2>
             </div>
             <div className="mt-4 space-y-3">
               {communityResources.filter((resource) => resource.communityId === id).map((resource) => (
                 <a key={resource.id} href={resource.href} target="_blank" rel="noreferrer" className="flex items-start justify-between gap-3 rounded-2xl border border-slate-100 bg-slate-50/70 p-3 transition hover:border-primary-200 hover:bg-primary-50/70">
                   <div>
-                    <p className="text-sm font-semibold text-slate-800">{resource.title}</p>
-                    <p className="mt-1 text-xs text-slate-500">{resource.type}</p>
+                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{resource.title}</p>
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{resource.type}</p>
                   </div>
                   <ExternalLink className="mt-1 h-4 w-4 text-slate-400" />
                 </a>
@@ -169,7 +169,7 @@ export default function CommunityDetail() {
           <Card className="p-4 sm:p-5">
             <div className="flex items-center gap-2">
               <MessageSquareText className="h-4 w-4 text-secondary-600" />
-              <h2 className="text-sm font-semibold text-slate-900">Trending topics</h2>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Trending topics</h2>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               {trendingTags.length > 0 ? (
@@ -187,7 +187,7 @@ export default function CommunityDetail() {
           <Card className="p-4 sm:p-5">
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-primary-600" />
-              <h2 className="text-sm font-semibold text-slate-900">Popular alumni</h2>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Popular alumni</h2>
             </div>
             <div className="mt-4 space-y-3">
               {communityAlumni.filter((alumni) => alumni.communityId === id).map((alumni) => (
@@ -205,7 +205,7 @@ export default function CommunityDetail() {
           <Card className="p-4 sm:p-5">
             <div className="flex items-center gap-2">
               <CalendarDays className="h-4 w-4 text-secondary-600" />
-              <h2 className="text-sm font-semibold text-slate-900">Upcoming events</h2>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Upcoming events</h2>
             </div>
             <div className="mt-4 space-y-3">
               {communityEvents.filter((event) => event.communityId === id).map((event) => (

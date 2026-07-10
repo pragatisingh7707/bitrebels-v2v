@@ -43,7 +43,7 @@ export default function NotificationCenter() {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 text-slate-900 dark:text-slate-100">
       <section className="overflow-hidden rounded-[28px] bg-gradient-to-r from-primary-600 via-fuchsia-600 to-secondary-600 p-8 text-white shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -72,7 +72,7 @@ export default function NotificationCenter() {
                 <div className="rounded-full bg-primary-50 p-2 text-primary-600">
                   <Icon className="h-4 w-4" />
                 </div>
-                <h2 className="text-lg font-semibold text-slate-900">{config.title}</h2>
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{config.title}</h2>
                 <Badge variant="slate">{categoryItems.length}</Badge>
               </div>
 
@@ -85,17 +85,17 @@ export default function NotificationCenter() {
                       key={item.id}
                       type="button"
                       onClick={() => markAsRead(item.id)}
-                      className={`flex w-full items-start gap-3 px-4 py-4 text-left transition hover:bg-slate-50 ${!item.read ? 'bg-primary-50/50' : 'bg-white'}`}
+                      className={`flex w-full items-start gap-3 px-4 py-4 text-left transition hover:bg-slate-50 dark:hover:bg-slate-800 ${!item.read ? 'bg-primary-50/50' : 'bg-white dark:bg-slate-900'}`}
                     >
                       <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600">
                         {item.actorName ? <Avatar name={item.actorName} className="h-10 w-10 text-xs" /> : <Users className="h-4 w-4" />}
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
-                          <p className="text-sm font-semibold text-slate-800">{item.message}</p>
+                          <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{item.message}</p>
                           {!item.read && <span className="h-2.5 w-2.5 rounded-full bg-primary-600" />}
                         </div>
-                        <p className="mt-1 text-xs text-slate-500">{item.timestamp}</p>
+                        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{item.timestamp}</p>
                       </div>
                     </button>
                   ))}

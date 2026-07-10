@@ -40,18 +40,18 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-      <Button variant="ghost" onClick={() => navigate(`/communities/${id}`)} className="mb-4 px-0 text-sm text-slate-500 hover:text-slate-700">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8 text-slate-900 dark:text-slate-100">
+      <Button variant="ghost" onClick={() => navigate(`/communities/${id}`)} className="mb-4 px-0 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-300 dark:hover:text-white">
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to community
       </Button>
 
-      <Card className="overflow-hidden border border-primary-100 bg-gradient-to-br from-white to-primary-50/60">
-        <div className="border-b border-primary-100 bg-white/80 p-6">
+      <Card className="overflow-hidden border border-primary-100 bg-gradient-to-br from-white to-primary-50/60 dark:border-slate-700 dark:bg-slate-900/80">
+        <div className="border-b border-primary-100 bg-white/80 p-6 dark:border-slate-700 dark:bg-slate-900/80">
           <div className="flex items-center gap-2 text-sm font-medium text-primary-600">
             <Sparkles className="h-4 w-4" /> Share with {community.name}
           </div>
-          <h1 className="mt-2 text-2xl font-semibold text-slate-900">Create a new post</h1>
-          <p className="mt-2 text-sm text-slate-600">Spark a helpful discussion around career growth, product practice, or research wins.</p>
+          <h1 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-slate-100">Create a new post</h1>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Spark a helpful discussion around career growth, product practice, or research wins.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5 p-6">
@@ -87,10 +87,10 @@ export default function CreatePost() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white/80 p-4">
+          <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/80">
             <div>
-              <p className="text-sm font-semibold text-slate-800">Ready to publish?</p>
-              <p className="text-sm text-slate-500">Your post will appear instantly for the community.</p>
+              <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">Ready to publish?</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Your post will appear instantly for the community.</p>
             </div>
             <Button type="submit" variant="primary">
               Publish post

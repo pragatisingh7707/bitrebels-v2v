@@ -8,7 +8,7 @@ import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import FilterSidebar from '../components/FilterSidebar';
 import RequestModal from '../components/RequestModal';
-import { supabase } from '../utils/supabaseclient';
+import { supabase } from '../utils/supabaseClient';
 import { initialStudentRequests } from '../data/mentorshipData';
 
 const studentSections = [
@@ -172,7 +172,7 @@ export default function MentorshipStudent() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 text-slate-900 dark:text-slate-100">
       <motion.section initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="rounded-3xl bg-gradient-to-r from-primary-600 via-fuchsia-600 to-secondary-600 p-8 text-white shadow-2xl">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -188,11 +188,11 @@ export default function MentorshipStudent() {
         <FilterSidebar filters={filters} onChange={(key, value) => setFilters((prev) => ({ ...prev, [key]: value }))} onClear={() => setFilters({})} mentorCount={filteredMentors.length} />
 
         <div className="space-y-6">
-          <Card className="p-4 sm:p-5">
+          <Card className="p-4 sm:p-5 dark:bg-slate-900">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div className="relative flex-1">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search by name, company, skill or domain" className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-4 text-sm outline-none transition focus:border-primary-400 focus:bg-white focus:ring-2 focus:ring-primary-100" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+                <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search by name, company, skill or domain" className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-primary-400 focus:bg-white focus:ring-2 focus:ring-primary-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-primary-400 dark:focus:ring-primary-500" />
               </div>
               <div className="flex items-center gap-2 text-sm text-slate-500">
                 <SlidersHorizontal className="h-4 w-4" /> {filteredMentors.length} results
@@ -203,26 +203,26 @@ export default function MentorshipStudent() {
           {loading ? (
             <Card className="p-12 text-center">
               <div className="flex flex-col items-center gap-4">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary-600" />
-                <p className="text-slate-600">Loading mentors...</p>
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary-600 dark:border-slate-700 dark:border-t-primary-500" />
+                <p className="text-slate-600 dark:text-slate-300">Loading mentors...</p>
               </div>
             </Card>
           ) : (
             <div className="grid gap-5 lg:grid-cols-2">
               {filteredMentors.map((mentor) => (
-              <motion.article key={mentor.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="overflow-hidden rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:shadow-xl">
+              <motion.article key={mentor.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="overflow-hidden rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900/80">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <img src={mentor.profilePhoto} alt={mentor.name} className="h-14 w-14 rounded-2xl object-cover" />
                     <div>
-                      <h3 className="text-lg font-semibold text-slate-900">{mentor.name}</h3>
-                      <p className="text-sm text-slate-500">{mentor.role} · {mentor.company}</p>
+                      <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{mentor.name}</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">{mentor.role} · {mentor.company}</p>
                     </div>
                   </div>
                   {mentor.verified ? <Badge variant="primary">LinkedIn verified</Badge> : <Badge variant="secondary">New mentor</Badge>}
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-600">
+                <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-600 dark:text-slate-300">
                   <span className="rounded-full bg-slate-100 px-3 py-1">{mentor.experience} yrs experience</span>
                   <span className="rounded-full bg-slate-100 px-3 py-1">{mentor.domain}</span>
                   <span className="rounded-full bg-slate-100 px-3 py-1">Batch {mentor.graduationYear}</span>

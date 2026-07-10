@@ -122,11 +122,11 @@ export default function AlumniDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(236,72,153,0.12),_transparent_30%),linear-gradient(135deg,_#fdf2f8_0%,_#ffffff_45%,_#f5ebff_100%)]">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(236,72,153,0.12),_transparent_30%),linear-gradient(135deg,_#fdf2f8_0%,_#ffffff_45%,_#f5ebff_100%)] text-slate-900 dark:text-slate-100 dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12 space-y-8">
         <motion.section
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-          className="relative overflow-hidden rounded-[28px] border border-pink-100/80 bg-white/95 p-6 sm:p-8 shadow-[0_24px_80px_-30px_rgba(236,72,153,0.28)]"
+          className="relative overflow-hidden rounded-[28px] border border-pink-100/80 bg-white/95 p-6 sm:p-8 shadow-[0_24px_80px_-30px_rgba(236,72,153,0.28)] dark:border-slate-700 dark:bg-slate-900/95"
         >
           <div className="pointer-events-none absolute -top-20 -right-10 h-48 w-48 rounded-full bg-gradient-to-br from-[#F9A8D4]/50 to-[#C4B5FD]/50 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-10 -left-8 h-32 w-32 rounded-full bg-[#F3E8FF]/70 blur-3xl" />
@@ -154,15 +154,15 @@ export default function AlumniDashboard() {
             {quickStatistics.map((stat, index) => {
               const Icon = statIcons[stat.icon];
               return (
-                <motion.div key={stat.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.05 * index }} className="group rounded-[22px] border border-slate-100 bg-white p-5 shadow-[0_16px_50px_-24px_rgba(15,23,42,0.16)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_48px_-20px_rgba(236,72,153,0.28)]">
+                <motion.div key={stat.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.05 * index }} className="group rounded-[22px] border border-slate-100 bg-white p-5 shadow-[0_16px_50px_-24px_rgba(15,23,42,0.16)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_48px_-20px_rgba(236,72,153,0.28)] dark:border-slate-700 dark:bg-slate-900/95">
                   <div className="flex items-center justify-between mb-4">
                     <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${statAccent[stat.icon] || 'bg-[#FDF2F8] text-[#EC4899]'}`}>
                       <Icon className="h-5 w-5" />
                     </div>
                     <span className="h-2.5 w-2.5 rounded-full bg-gradient-to-r from-[#EC4899] to-[#8B5CF6]" />
                   </div>
-                  <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">{stat.value}</div>
-                  <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+                  <div className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 tabular-nums">{stat.value}</div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">{stat.label}</div>
                 </motion.div>
               );
             })}
@@ -177,7 +177,7 @@ export default function AlumniDashboard() {
               </Eyebrow>
               {requests.length === 0 ? (
                 <Card className={`p-8 text-center ${surface}`}>
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FDF2F8] text-[#EC4899]">
+                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FDF2F8] text-[#EC4899] dark:bg-slate-800">
                     <Sparkles className="h-5 w-5" />
                   </div>
                   <p className="mt-4 text-sm font-semibold text-slate-900">You’re all caught up</p>

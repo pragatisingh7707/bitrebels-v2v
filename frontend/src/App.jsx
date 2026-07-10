@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
@@ -19,27 +20,29 @@ import { AlumniDashboardContent } from './components/dashboard/AlumniDashboardCo
 export default function App() {
   return (
     <AuthProvider>
-      <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-        <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/alumni-dashboard" element={<AlumniDashboardContent />} />
-          <Route path="/communities" element={<Communities />} />
-          <Route path="/communities/:id" element={<CommunityDetail />} />
-          <Route path="/communities/:id/create-post" element={<CreatePost />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/notifications" element={<NotificationCenter />} />
-          <Route path="/signup" element={<SignupChoice />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile/create" element={<ProfileCreate />} />
-          <Route path="/find-mentors" element={<MentorshipStudent />} />
-          <Route path="/mentorship-dashboard" element={<MentorshipDashboard />} />
-          <Route path="/mentor-dashboard" element={<MentorDashboard />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Layout>
-    </Router>
+      <ThemeProvider>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/alumni-dashboard" element={<AlumniDashboardContent />} />
+              <Route path="/communities" element={<Communities />} />
+              <Route path="/communities/:id" element={<CommunityDetail />} />
+              <Route path="/communities/:id/create-post" element={<CreatePost />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/notifications" element={<NotificationCenter />} />
+              <Route path="/signup" element={<SignupChoice />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile/create" element={<ProfileCreate />} />
+              <Route path="/find-mentors" element={<MentorshipStudent />} />
+              <Route path="/mentorship-dashboard" element={<MentorshipDashboard />} />
+              <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </ThemeProvider>
     </AuthProvider>
   );
 }

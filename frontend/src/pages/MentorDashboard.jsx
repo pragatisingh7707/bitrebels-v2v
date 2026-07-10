@@ -5,7 +5,7 @@ import { Badge } from '../components/Badge';
 import { Card } from '../components/Card';
 import RequestCard from '../components/RequestCard';
 import { useAuth } from '../context/AuthContext';
-import { supabase } from '../utils/supabaseclient';
+import { supabase } from '../utils/supabaseClient';
 
 export default function MentorDashboard() {
   const { user } = useAuth();
@@ -111,7 +111,7 @@ export default function MentorDashboard() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 text-slate-900 dark:text-slate-100">
       <motion.section initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="rounded-3xl bg-gradient-to-r from-primary-600 via-fuchsia-600 to-secondary-600 p-8 text-white shadow-2xl">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -149,7 +149,7 @@ export default function MentorDashboard() {
       <div className="mt-8 grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-slate-900">Pending requests</h2>
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Pending requests</h2>
             <Badge variant="secondary">Needs action</Badge>
           </div>
           <div className="space-y-3">
@@ -165,7 +165,7 @@ export default function MentorDashboard() {
                 />
               ))
             ) : (
-              <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-6 text-sm text-slate-500">No pending requests today.</div>
+              <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-6 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-400">No pending requests today.</div>
             )}
           </div>
         </section>
@@ -173,34 +173,34 @@ export default function MentorDashboard() {
         <div className="space-y-8">
           <section>
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-slate-900">Accepted meetings</h2>
+              <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Accepted meetings</h2>
               <Badge variant="primary">Ready</Badge>
             </div>
             <div className="space-y-3">
               {requests.filter((request) => request.status === 'Accepted').length ? (
                 requests.filter((request) => request.status === 'Accepted').map((request) => (
-                  <Card key={request.id} className="p-4">
+                  <Card key={request.id} className="p-4 bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700">
                     <div className="flex items-center justify-between gap-3">
                       <div>
-                        <p className="font-semibold text-slate-900">{request.studentName}</p>
-                        <p className="text-sm text-slate-500">{request.topic}</p>
+                        <p className="font-semibold text-slate-900 dark:text-slate-100">{request.studentName}</p>
+                        <p className="text-sm text-slate-500 dark:text-slate-400">{request.topic}</p>
                       </div>
                       <Badge variant="primary">Accepted</Badge>
                     </div>
                   </Card>
                 ))
               ) : (
-                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-6 text-sm text-slate-500">No accepted meetings yet.</div>
+                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-6 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-400">No accepted meetings yet.</div>
               )}
             </div>
           </section>
 
           <section>
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-slate-900">Completed meetings</h2>
+              <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Completed meetings</h2>
               <Badge variant="emerald">Completed</Badge>
             </div>
-            <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-6 text-sm text-slate-500">
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-6 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-400">
               No completed meetings yet. After each session, update your notes and close the loop.
             </div>
           </section>

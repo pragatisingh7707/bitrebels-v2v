@@ -13,13 +13,13 @@ export default function MentorCard({ mentor }) {
 
   return (
     <>
-      <Card className="p-6 flex flex-col justify-between h-full hover:shadow-md transition-all">
+      <Card className="p-6 flex flex-col justify-between h-full hover:shadow-md transition-all dark:border-slate-700 dark:bg-slate-900/95">
         <div className="space-y-4">
           <div className="flex gap-4 items-start">
             <Avatar name={mentor.name} className="h-12 w-12" />
             <div>
-              <h3 className="text-lg font-bold text-slate-900 leading-snug">{mentor.name}</h3>
-              <div className="flex items-center gap-1.5 text-sm text-slate-600 font-medium">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">{mentor.name}</h3>
+              <div className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400 font-medium">
                 <Briefcase className="h-3.5 w-3.5 text-slate-400" />
                 <span>{mentor.role} at <span className="text-slate-900 font-semibold">{mentor.company}</span></span>
               </div>
@@ -52,13 +52,13 @@ export default function MentorCard({ mentor }) {
       <AnimatePresence>
         {isOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
-            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="bg-white max-w-md w-full p-6 rounded-xl shadow-xl relative border border-slate-100">
-              <button onClick={() => setIsOpen(false)} className="absolute right-4 top-4 text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Book a Session</h3>
-              <p className="text-sm text-slate-500 mb-4">Select an upcoming open slot with <strong>{mentor.name}</strong>.</p>
+            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="bg-white max-w-md w-full p-6 rounded-xl shadow-xl relative border border-slate-100 dark:bg-slate-900 dark:border-slate-700">
+              <button onClick={() => setIsOpen(false)} className="absolute right-4 top-4 text-slate-400 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-100"><X className="h-5 w-5" /></button>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">Book a Session</h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">Select an upcoming open slot with <strong>{mentor.name}</strong>.</p>
               <div className="space-y-2 mb-6">
                 {slots.map(slot => (
-                  <button key={slot} onClick={() => { setBooked(true); setIsOpen(false); }} className="w-full text-left px-4 py-2.5 rounded-lg border border-slate-200 text-sm font-medium hover:bg-primary-50 hover:border-primary-300 hover:text-primary-700 transition-colors">
+                  <button key={slot} onClick={() => { setBooked(true); setIsOpen(false); }} className="w-full text-left px-4 py-2.5 rounded-lg border border-slate-200 text-sm font-medium hover:bg-primary-50 hover:border-primary-300 hover:text-primary-700 transition-colors dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-primary-500/20 dark:hover:text-primary-300">
                     {mentor.availability.split(" ")[0]} — {slot}
                   </button>
                 ))}
