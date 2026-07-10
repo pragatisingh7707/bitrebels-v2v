@@ -15,19 +15,82 @@ export default function MentorDashboard() {
     if (!user) return;
 
     const fetchRequests = async () => {
-      const { data, error } = await supabase
+      // Determine whether profiles.id or profiles.user_id should be used
+      let mentorProfileId = null;
+      try {
+        const { data: profileById, error: profileByIdErr } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
+        if (profileById && !profileByIdErr) {
+          mentorProfileId = profileById.id;
+        } else {
+          const { data: profileByUser, error: profileByUserErr } = await supabase.from('profiles').select('*').eq('user_id', user.id).maybeSingle();
+          if (profileByUser && !profileByUserErr) {
+            mentorProfileId = profileByUser.id;
+          }
+        }
+      } catch (err) {
+        console.warn('Error while resolving mentor profile id mapping:', err);
+      }
+
+      // Log table schema (attempt) to confirm column names
+      try {
+        const { data: cols, error: colsErr } = await supabase.from('information_schema.columns').select('column_name').eq('table_name', 'mentorship_requests');
+        console.log('mentorship_requests columns (information_schema):', { cols, colsErr });
+      } catch (err) {
+        console.warn('Could not query information_schema.columns:', err);
+      }
+
+      // Fetch mentorship requests targeted to this mentor (use resolved mentorProfileId when available)
+      const mentorFilterValue = mentorProfileId || user.id;
+      const { data: requestsData, error: requestsError } = await supabase
         .from('mentorship_requests')
         .select('*')
-        .eq('mentor_id', user.id);
+        .eq('mentor_id', mentorFilterValue);
 
-      console.log('MentorDashboard fetched mentorship_requests', { mentorId: user.id, data, error });
+      console.log('MentorDashboard raw mentorship_requests', { mentorId: user.id, requestsData, requestsError });
 
-      if (error) {
-        console.error('Error fetching mentorship requests:', error);
+      if (requestsError) {
+        console.error('Error fetching mentorship requests:', requestsError);
         return;
       }
 
-      setRequests(data || []);
+      const studentIds = Array.from(new Set((requestsData || []).map((r) => r.student_id).filter(Boolean)));
+
+      // Fetch student profiles for display (name, photo, college, branch, graduation_year)
+      let profiles = [];
+      if (studentIds.length) {
+        const { data: profilesData, error: profilesError } = await supabase
+          .from('profiles')
+          .select('*')
+          .in('id', studentIds);
+
+        if (profilesError) {
+          console.error('Error fetching student profiles:', profilesError);
+        } else {
+          profiles = profilesData || [];
+        }
+      }
+
+      // Map to the alumni request shape expected by RequestCard (keeps UI unchanged)
+      const mapped = (requestsData || []).map((r) => {
+        const studentProfile = profiles.find((p) => p.id === r.student_id) || {};
+        return {
+          id: r.id,
+          studentName: studentProfile.name || studentProfile.full_name || 'Student',
+          college: studentProfile.college || studentProfile.institution || '',
+          branch: studentProfile.branch || studentProfile.field || '',
+          graduationYear: studentProfile.graduation_year || studentProfile.graduationYear || new Date().getFullYear(),
+          topic: r.topic || r.purpose || r.subject || '',
+          requestedDate: r.preferred_date || r.requested_date || (r.created_at ? new Date(r.created_at).toISOString().slice(0, 10) : ''),
+          message: r.message || '',
+          status: (r.status || '').toString().charAt(0).toUpperCase() + (r.status || '').toString().slice(1),
+          raw: r,
+          studentProfile,
+        };
+      });
+
+      console.log('MentorDashboard mapped requests for UI', mapped);
+
+      setRequests(mapped);
     };
 
     fetchRequests();
