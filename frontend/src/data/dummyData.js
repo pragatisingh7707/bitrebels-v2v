@@ -412,3 +412,62 @@ export const communityEvents = [
   { id: "ev3", communityId: "c2", title: "Product Teardown Sprint", date: "19 Jul · 5:00 PM" },
   { id: "ev4", communityId: "c3", title: "Case Workshop with Alumni", date: "22 Jul · 4:00 PM" }
 ];
+
+export const alumniProfile = {
+  name: "Aditi Rao",
+  role: "Senior Product Designer",
+  company: "Notion",
+  memberSince: "Member since 2021"
+};
+
+export const pendingMentorshipRequests = [
+  { id: "pr1", studentName: "Maya Singh", year: "2nd Year", topic: "Career switch into UX", requestedAgo: "2h ago" },
+  { id: "pr2", studentName: "Nisha Patel", year: "3rd Year", topic: "Portfolio review", requestedAgo: "5h ago" }
+];
+
+export const studentRequests = [
+  { id: "sr1", studentName: "Rhea Menon", message: "asked for a mock interview practice session.", time: "10 mins ago" },
+  { id: "sr2", studentName: "Pooja Das", message: "shared a design case study for feedback.", time: "1 hour ago" }
+];
+
+export const acceptedSessions = [
+  { id: "as1", studentName: "Ishita Verma", topic: "Resume review", date: "Tue, 16 Jul", time: "7:00 PM", mode: "Video Call" },
+  { id: "as2", studentName: "Kavya Shah", topic: "Product strategy discussion", date: "Thu, 18 Jul", time: "6:30 PM", mode: "Chat + Call" }
+];
+
+export const upcomingMeetings = [
+  { id: "um1", title: "Mentorship Roundtable", date: "18 Jul", time: "5:30 PM", type: "Panel" },
+  { id: "um2", title: "Alumni Coffee Chat", date: "22 Jul", time: "8:00 PM", type: "Networking" }
+];
+
+export const communityContributions = [
+  { id: "cc1", type: "Answered", community: "Women in AI & Analytics", title: "How to structure an AI portfolio project", engagement: "24 likes", time: "15m ago" },
+  { id: "cc2", type: "Posted", community: "Product Management Circle", title: "A beginner-friendly approach to product design critiques", engagement: "18 likes", time: "1h ago" }
+];
+
+export const uploadedResources = [
+  { id: "ur1", title: "Design Systems Cheatsheet", uploadedAgo: "2h ago", type: "PDF", downloads: 81 },
+  { id: "ur2", title: "Mock Interview Questions for PM Roles", uploadedAgo: "Yesterday", type: "Guide", downloads: 54 }
+];
+
+export const quickStatistics = [
+  { id: "qs1", icon: "Users", value: "128", label: "Students helped" },
+  { id: "qs2", icon: "CalendarCheck", value: "14", label: "Sessions this month" },
+  { id: "qs3", icon: "Star", value: "4.9", label: "Average rating" },
+  { id: "qs4", icon: "FileUp", value: "7", label: "Resources shared" }
+];
+
+export const recentMessages = [
+  { id: "rm1", studentName: "Anika Rao", preview: "Thanks for the feedback on my resume.", time: "8m ago", unread: true },
+  { id: "rm2", studentName: "Sanya Iyer", preview: "Could we schedule a quick call this week?", time: "1h ago", unread: false }
+];
+
+export const availabilitySlots = ["Tue 6-8 PM", "Thu 7-9 PM", "Sat 10 AM-1 PM"];
+
+export const calendarHighlights = [7, 12, 18, 22];
+
+export const leaderboard = [
+  { id: "l1", name: "Aditi Rao", rank: 1, sessions: 24, points: 1840, isYou: true },
+  { id: "l2", name: "Neha Bhatt", rank: 2, sessions: 21, points: 1742, isYou: false },
+  { id: "l3", name: "Sana Khan", rank: 3, sessions: 19, points: 1620, isYou: false }
+];
