@@ -2,7 +2,7 @@ import React from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-export function Badge({ children, variant = 'slate', className, ...props }) {
+export function Badge({ children, variant = 'slate', className = '', ...props }) {
   const baseStyles = 'inline-flex items-center rounded-md px-2 py-1 text-xs font-semibold tracking-wide border';
   const variants = {
     slate: 'bg-slate-50 text-slate-600 border-slate-200',

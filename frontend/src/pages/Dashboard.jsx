@@ -53,7 +53,10 @@ function SectionHeader({ title, subtitle, action }) {
 }
 
 export default function Dashboard() {
-  const [quote] = useState(() => motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]);
+  const [quote] = useState(() => {
+    const dayIndex = new Date().getDate() % motivationalQuotes.length;
+    return motivationalQuotes[dayIndex];
+  });
   const recommendedAlumni = useMemo(() => mentors.slice(0, 3), []);
   const trendingCommunities = useMemo(
     () => [...communities].sort((a, b) => b.membersCount - a.membersCount),
@@ -81,7 +84,7 @@ export default function Dashboard() {
               <p className="text-white/80 text-sm mt-1">You have <strong>{upcomingSessions.length} upcoming sessions</strong> and <strong>{notifications.length} new updates</strong> waiting for you.</p>
             </div>
           </div>
-          <Button variant="outline" as={Link} to="/mentors" className="bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white shrink-0">
+          <Button variant="outline" as={Link} to="/find-mentors" className="bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white shrink-0">
             Find a Mentor <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>

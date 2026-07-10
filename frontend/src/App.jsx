@@ -10,6 +10,9 @@ import CreatePost from './pages/CreatePost';
 import Resources from './pages/Resources';
 import SignupChoice from './pages/SignupChoice';
 import ProfileCreate from './pages/ProfileCreate';
+import MentorshipStudent from './pages/MentorshipStudent';
+import MentorshipDashboard from './pages/MentorshipDashboard';
+import MentorDashboard from './pages/MentorDashboard';
 
 export default function App() {
   return (
@@ -25,6 +28,9 @@ export default function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/signup" element={<SignupChoice />} />
           <Route path="/profile/create" element={<ProfileCreate />} />
+          <Route path="/find-mentors" element={<MentorshipStudent />} />
+          <Route path="/mentorship-dashboard" element={<MentorshipDashboard />} />
+          <Route path="/mentor-dashboard" element={<MentorDashboard />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>
