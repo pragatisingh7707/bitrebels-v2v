@@ -8,6 +8,7 @@ import Communities from './pages/Communities';
 import CommunityDetail from './pages/CommunityDetail';
 import CreatePost from './pages/CreatePost';
 import Resources from './pages/Resources';
+import NotificationCenter from './pages/NotificationCenter';
 import SignupChoice from './pages/SignupChoice';
 import ProfileCreate from './pages/ProfileCreate';
 import MentorshipStudent from './pages/MentorshipStudent';
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/communities/:id" element={<CommunityDetail />} />
           <Route path="/communities/:id/create-post" element={<CreatePost />} />
           <Route path="/resources" element={<Resources />} />
+          <Route path="/notifications" element={<NotificationCenter />} />
           <Route path="/signup" element={<SignupChoice />} />
           <Route path="/profile/create" element={<ProfileCreate />} />
           <Route path="/find-mentors" element={<MentorshipStudent />} />

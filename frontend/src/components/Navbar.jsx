@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Sparkles, Users, MessageSquare, LayoutDashboard, GraduationCap } from 'lucide-react';
 import { Avatar } from './Avatar';
+import NotificationBell from './NotificationBell';
 
 export default function Navbar() {
   const navLinkClass = ({ isActive }) => 
@@ -23,6 +24,7 @@ export default function Navbar() {
           <NavLink to="/communities" className={navLinkClass}><MessageSquare className="h-4 w-4" /> Communities</NavLink>
         </nav>
         <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
+          <NotificationBell />
           <Link to="/signup" className="inline-flex rounded-full bg-gradient-to-r from-primary-600 to-secondary-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
             Sign Up
           </Link>
