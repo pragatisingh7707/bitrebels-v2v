@@ -27,7 +27,7 @@ export default function Home() {
               </h1>
               <p className="text-lg text-slate-600">HerConnect links ambitious students with seasoned alumni mentors. Navigate your career paths with ease.</p>
               <div className="flex flex-wrap gap-4">
-                <Button variant="primary" size="lg" as={Link} to="/mentors" className="group">
+                <Button variant="primary" size="lg" as={Link} to="/find-mentors" className="group">
                   Find a Mentor <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </div>

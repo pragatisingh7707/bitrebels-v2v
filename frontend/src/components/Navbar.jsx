@@ -20,7 +20,6 @@ export default function Navbar() {
         <nav className="flex items-center gap-6">
           <NavLink to="/dashboard" className={navLinkClass}><LayoutDashboard className="h-4 w-4" /> Dashboard</NavLink>
           <NavLink to="/find-mentors" className={navLinkClass}><GraduationCap className="h-4 w-4" /> Mentorship</NavLink>
-          <NavLink to="/mentors" className={navLinkClass}><Users className="h-4 w-4" /> Mentors</NavLink>
           <NavLink to="/communities" className={navLinkClass}><MessageSquare className="h-4 w-4" /> Communities</NavLink>
         </nav>
         <div className="flex items-center gap-3 pl-4 border-l border-slate-200">

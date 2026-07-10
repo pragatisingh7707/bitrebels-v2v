@@ -75,7 +75,7 @@ export default function Dashboard() {
               : `You have ${upcomingSessions.length} upcoming sessions and ${notifications.length} new updates waiting for you.`
           }
           ctaLabel={role === 'alumni' ? 'View public profile' : 'Find a mentor'}
-          ctaTo="/mentors"
+          ctaTo="/find-mentors"
         />
       </motion.section>
 
