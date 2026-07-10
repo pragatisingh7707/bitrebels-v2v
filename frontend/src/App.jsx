@@ -5,6 +5,9 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Mentors from './pages/Mentors';
 import Communities from './pages/Communities';
+import CommunityDetail from './pages/CommunityDetail';
+import CreatePost from './pages/CreatePost';
+import Resources from './pages/Resources';
 import SignupChoice from './pages/SignupChoice';
 import ProfileCreate from './pages/ProfileCreate';
 
@@ -17,6 +20,9 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/mentors" element={<Mentors />} />
           <Route path="/communities" element={<Communities />} />
+          <Route path="/communities/:id" element={<CommunityDetail />} />
+          <Route path="/communities/:id/create-post" element={<CreatePost />} />
+          <Route path="/resources" element={<Resources />} />
           <Route path="/signup" element={<SignupChoice />} />
           <Route path="/profile/create" element={<ProfileCreate />} />
           <Route path="*" element={<Navigate to="/" replace />} />
