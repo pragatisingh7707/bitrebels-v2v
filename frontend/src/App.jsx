@@ -15,7 +15,6 @@ import MentorshipStudent from './pages/MentorshipStudent';
 import MentorshipDashboard from './pages/MentorshipDashboard';
 import MentorDashboard from './pages/MentorDashboard';
 import { AlumniDashboardContent } from './components/dashboard/AlumniDashboardContent';
-
 export default function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -23,6 +22,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/alumni-dashboard" element={<AlumniDashboardContent />} />
           <Route path="/mentors" element={<Mentors />} />
           <Route path="/communities" element={<Communities />} />
           <Route path="/communities/:id" element={<CommunityDetail />} />
